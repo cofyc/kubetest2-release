@@ -4,6 +4,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+ROOT=$(unset CDPATH && cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
+cd $ROOT
+
 TOKEN=$TOKEN
 echo "info: getting release tagged with $VERSION"
 release_id=$(curl -s -H 'Accept: application/vnd.github.v3+json' -H "Authorization: token $TOKEN" \
@@ -49,7 +52,7 @@ function upload_asset() {
         -H 'Content-Type: application/gzip' \
         -X POST \
         --data-binary @$asset \
-        "https://uploads.github.com/repos/cofyc/kubetest2/releases/23828885/assets?name=$name"
+        "https://uploads.github.com/repos/cofyc/kubetest2/releases/$release_id/assets?name=$name"
 }
 
 for b in ${binaries[@]}; do
