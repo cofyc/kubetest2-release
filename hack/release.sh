@@ -22,7 +22,6 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
     exit 1
 fi
 
-exit
 echo "info: getting release tagged with $VERSION"
 release_id=$(curl -s -H 'Accept: application/vnd.github.v3+json' -H "Authorization: token $GITHUB_TOKEN" \
     https://api.github.com/repos/cofyc/kubetest2/releases/tags/$VERSION | jq '.id')

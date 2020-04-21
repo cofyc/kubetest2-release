@@ -16,13 +16,13 @@ tmpdir=$(mktemp -d /tmp/build-kubetest2-XXX)
 echo "info: tmpdir $tmpdir"
 trap "rm -rf ${tmpdir}" EXIT
 cd ${tmpdir}
-git clone --depth=1 -b kubetest2 $GIT_REPO
+git clone --depth=1 -b kubetest2-master $GIT_REPO
 cd test-infra
 
 test -d $ROOT/output || mkdir $ROOT/output
 
 export GO111MODULE=on
-LDFLAGS='-X k8s.io/component-base/version.gitVersion=v0.0.8'
+LDFLAGS='-X k8s.io/component-base/version.gitVersion=v0.0.9'
 for platform in ${platforms[@]}; do
     export GOOS=${platform%/*}
     export GOARCH=${platform##*/}
